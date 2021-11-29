@@ -9,7 +9,7 @@ defmodule Hangman.Impl.Game do
   }
 
   defstruct(
-    turns_left:   15,
+    turns_left:   7,
     game_state:   :initializing,
     letters:      [],
     letters_used: MapSet.new(),
@@ -19,7 +19,8 @@ defmodule Hangman.Impl.Game do
 
   @spec new_game() :: t
   def new_game do
-    new_game(Dictionary.random_word)
+    word_list = Dictionary.start
+    new_game(Dictionary.random_word(word_list))
   end
 
   @spec new_game(String.t) :: list(String.t)

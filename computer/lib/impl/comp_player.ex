@@ -6,7 +6,7 @@ defmodule Computer.Impl.CompPlayer do
     game = Hangman.new_game()
     tally = Hangman.tally(game)
     epoch_state = %{
-      cycles_left: 100,
+      cycles_left: 10000,
       cycles_completed: 0,
       wins:   0,
     }
@@ -36,7 +36,7 @@ defmodule Computer.Impl.CompPlayer do
   def simulate({game, tally, epoch_state}) do
     IO.puts feedback_for(tally)
     IO.puts(current_word(tally))
-    guess = get_letter(game.letters_used)
+    guess = get_letter(tally)
     { updated_game, updated_tally} = Hangman.make_move(game, guess)
     # :timer.sleep(100)
     simulate({ updated_game, updated_tally, epoch_state })
@@ -72,8 +72,11 @@ defmodule Computer.Impl.CompPlayer do
 
   #################### GET LETTER ####################
 
-  def get_letter(letters_used) do
-    Enum.map(?a..?z, fn(x) -> <<x :: utf8>> end) |> Enum.reject(fn(x) -> Enum.member?(letters_used, x) end) |> Enum.random()
+  def get_letter(tally) do
+
+    # common_letters = ["e", "a", "r", "i", "o", "t", "n", "s", "l", "c", "u", "d", "p"]
+    # tally.letters |> length |> Dictionary.get_words_of_n_length |> IO.puts
+    Enum.map(?a..?z, fn(x) -> <<x :: utf8>> end) |> Enum.reject(fn(x) -> Enum.member?(tally.letters_used, x) end) |> Enum.random()
     # ?a..?z |> MapSet.new() |> MapSet.difference(letters_used) |> Enum.random()
   end
 

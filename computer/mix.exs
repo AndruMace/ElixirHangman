@@ -21,7 +21,8 @@ defmodule Computer.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:hangman, path: "../hangman"}
+      {:hangman, path: "../hangman"},
+      {:dictionary, path: "../dictionary"}
     ]
   end
 end
